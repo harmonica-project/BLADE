@@ -22,8 +22,7 @@ def create_app(configfile=None):
             'The BLADE project',
             View('Home', 'index'),
             View('Knowledge base', 'knowledge_base'),
-            View('Get recommandation', 'get_recommandation'),
-            View('(temp) Add blockchain', 'add_blockchain')
+            View('Get recommandation', 'get_recommandation')
         )
 
     nav.init_app(app)
@@ -34,15 +33,15 @@ def create_app(configfile=None):
     def index():
         return render_template('pages/index.html')
 
-    @app.route('/add_blockchain')
+    @app.route('/knowledge_base')
+    def knowledge_base():
+        return render_template('pages/knowledge_base.html')
+
+    @app.route('/knowledge_base/add_blockchain')
     def add_blockchain():
         form = forms.NewBlockchainForm()
         form.validate_on_submit()
         return render_template('pages/add_blockchain.html', form=form)
-
-    @app.route('/knowledge_base')
-    def knowledge_base():
-        return render_template('pages/knowledge_base.html')
 
     @app.route('/recommandation')
     def get_recommandation():

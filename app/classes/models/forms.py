@@ -6,12 +6,12 @@ from wtforms.validators import Required
 class BlockchainArchType(Form):
     storage = BooleanField('Storage element')
     compute_elt = BooleanField('Computational element')
-    architectural_elt = BooleanField('Architectural element')
+    asset_manager = BooleanField('Asset manager element')
     software_connector = BooleanField('Software connector')
 
 class BlockchainFeatures(Form):
-    failure_tolerant = BooleanField('Cryptocurrencies')
-    byzantine_tolerant = BooleanField('Support of smart-contracts (embedded code inside the blockchain)')
+    cryptocurrencies = BooleanField('Cryptocurrencies')
+    smart_contracts = BooleanField('Support of smart-contracts (embedded code inside the blockchain)')
 
 class FeaturesForm(Form):
     blockchain_features = FormField(BlockchainFeatures, 'Blockchain features')
@@ -20,15 +20,15 @@ class FeaturesForm(Form):
 class SecurityForm(Form):
     scope = SelectField('Blockchain scope', choices=[('public', 'Public'), ('private', 'Private')], validators=[Required()])
     data_access = SelectField('Data access', choices=[('unpermissionned', 'Unpermissionned'), ('permissionned', 'Permissionned')], validators=[Required()])
-    data_encryption = BooleanField('Data encryption?')
+    data_encryption = BooleanField('Native data encryption?')
 
 class EfficiencyForm(Form):
     throughput = IntegerField('Throughput (tx/s)', validators=[Required()])
     latency = IntegerField('Maximum latency', validators=[Required()])
+    energy_saving = BooleanField('Energy saving?')
 
 class ReliabilityForm(Form):
     fault_tolerant = BooleanField('Fault tolerant?')
-    failure_tolerant = BooleanField('Failure tolerant?')
     byzantine_tolerant = BooleanField('Byzantine-fault tolerant?')
 
 class NewBlockchainForm(Form):

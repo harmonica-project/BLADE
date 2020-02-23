@@ -2,7 +2,7 @@
 
 from pymongo import MongoClient
 from pymongo import errors
-import settings
+from . import settings
 import pymongo as pym
 import time
 
