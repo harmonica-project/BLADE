@@ -10,7 +10,7 @@ configparser==4.0.2
 cryptography==2.8
 decorator==4.4.1
 dominate==2.4.0
-Flask==0.12.5
+Flask==1.0
 flask-appconfig==0.11.1
 Flask-Bootstrap==3.3.7.1
 Flask-Migrate==2.5.2
