@@ -4,8 +4,7 @@ from . import bdd
 import numpy as np
 from topsis import topsis
 from app.classes.bdd import Bdd
-from pprint import pprint
-import pprint
+
 class Solver:
     """Solver object is responsible of doing calculations to find the best alternative when requirements are provided."""
 
@@ -119,7 +118,7 @@ class Solver:
             else:
                 self.results["disqualified"].append(b)
 
-    def print_light_results(self):
+    def print_light_results(self, scores):
         """Display results in CLI"""
 
         if self.results["optimum_id"] is None:
@@ -135,6 +134,7 @@ class Solver:
 
             best_altr = self.results["considered"][self.results["optimum_id"]]
             print("Best solution: %s" %(best_altr["name"] + " (" + best_altr["infoAttributes"]["consensusAlgorithm"] + ")"))
+            print("Scores:", scores)
 
     def solve(self):
         """Executes the 2-step solving process : filter unsuitable alternatives, then run TOPSIS to find the best alternative"""
@@ -144,10 +144,10 @@ class Solver:
 
         decision = topsis(self.alternatives_values, self.weights, self.costs)
         decision.calc()
-        print(decision.C)
+        
         self.results['optimum_id'] = decision.optimum_choice
 
-        self.print_light_results()
+        self.print_light_results(decision.C)
 
 
         
