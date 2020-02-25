@@ -5,7 +5,7 @@ import numpy as np
 from topsis import topsis
 from app.classes.bdd import Bdd
 from pprint import pprint
-
+import pprint
 class Solver:
     """Solver object is responsible of doing calculations to find the best alternative when requirements are provided."""
 
@@ -144,6 +144,7 @@ class Solver:
 
         decision = topsis(self.alternatives_values, self.weights, self.costs)
         decision.calc()
+        print(decision.C)
         self.results['optimum_id'] = decision.optimum_choice
 
         self.print_light_results()
