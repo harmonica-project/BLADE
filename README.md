@@ -47,7 +47,7 @@ mongorestore -d knowledge-base knowledge-base
 
 *If this is not working, use a MongoDB editor such as Robo3T or Studio3T, or the MongoDB CLI to create knowledge-base database.*
 
-##Run
+## Run
 
 This decision process needs an input file containing all the requirements to work. Fortunately, we created one called supplychain.yaml as an example. You can edit the file to set your own requirements or create yours, following this syntax:
 
@@ -71,6 +71,6 @@ To run the script from that, simply type:
 python3 manual_solver.py supplychain.yaml
 ```
 
-##Contact
+## Contact
 
 If you have any questions, feel free to reach us at this address: nicolas.six@univ-paris1.fr!
