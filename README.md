@@ -70,6 +70,9 @@ To run the script from that, simply type:
 ```bash
 python3 manual_solver.py supplychain.yaml
 ```
+## Associated publications
+
+Six, Nicolas, Nicolas Herbaut, and Camille Salinesi. "Quelle Blockchain choisir? Un outil d'aide à la décision pour guider le choix de technologie Blockchain." (2020).
 
 ## Contact
 
