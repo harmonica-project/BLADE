@@ -5,6 +5,7 @@ import numpy as np
 from topsis import topsis
 from app.classes.bdd import Bdd
 
+
 class Solver:
     """Solver object is responsible of doing calculations to find the best alternative when requirements are provided."""
 
@@ -48,13 +49,12 @@ class Solver:
 
         if save:
             self.save_results()
-    
+
     def save_results(self):
         """Save results in database"""
 
         self.bdd.save_results(self.alternatives, self.requirements, self.weights, self.costs, self.results)
 
-       
     def get_labels_and_costs(self):
         """Get attr labels list and costs in BDD and returns them as a tuple of arrays
         
@@ -102,7 +102,7 @@ class Solver:
             qualified = True
 
             for i in range(0, len(self.requirements)):
-                if self.requirements[i][0]: 
+                if self.requirements[i][0]:
                     prop = b["consideredAttributes"][self.alternatives_attrs[i]]
                     if prop["cost"]:
                         if self.format_value(prop["value"]) < self.requirements[i][1]:
@@ -112,7 +112,7 @@ class Solver:
                         if self.format_value(prop["value"]) > self.requirements[i][1]:
                             qualified = False
                             break
-            
+
             if qualified:
                 self.results["considered"].append(b)
             else:
@@ -120,21 +120,23 @@ class Solver:
 
     def print_light_results(self, scores):
         """Display results in CLI"""
-
+        res = ""
         if self.results["optimum_id"] is None:
-            print("No result yet. Execute the solver before.")
+            return "No result yet. Execute the solver before."
         else:
-            print("Considered alternatives: ")
+            res += "Considered alternatives: \n"
             for a in self.results["considered"]:
-                print("- %s" %(a["name"] + " (" + a["infoAttributes"]["consensusAlgorithm"] + ")"))
+                res += "- %s" % (a["name"] + " (" + a["infoAttributes"]["consensusAlgorithm"] + ")\n")
 
-            print("Disqualified alternatives: ")
+            res += "Disqualified alternatives: \n"
             for a in self.results["disqualified"]:
-                print("- %s" %(a["name"] + " (" + a["infoAttributes"]["consensusAlgorithm"] + ")"))
+                res += "- %s" % (a["name"] + " (" + a["infoAttributes"]["consensusAlgorithm"] + ")\n")
 
             best_altr = self.results["considered"][self.results["optimum_id"]]
-            print("Best solution: %s" %(best_altr["name"] + " (" + best_altr["infoAttributes"]["consensusAlgorithm"] + ")"))
-            print("Scores:", scores)
+            res += "Best solution: %s" % (
+                        best_altr["name"] + " (" + best_altr["infoAttributes"]["consensusAlgorithm"] + ")\n")
+            res += "Scores: %s \n" % scores
+            return res
 
     def solve(self):
         """Executes the 2-step solving process : filter unsuitable alternatives, then run TOPSIS to find the best alternative"""
@@ -144,12 +146,7 @@ class Solver:
 
         decision = topsis(self.alternatives_values, self.weights, self.costs)
         decision.calc()
-        
+
         self.results['optimum_id'] = decision.optimum_choice
 
-        self.print_light_results(decision.C)
-
-
-        
-                
-                
+        return self.print_light_results(decision.C)

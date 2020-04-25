@@ -1,0 +1,23 @@
+.input-pane {
+    border:1px solid black;
+    border-radius:5px;
+    padding: 10px;
+}
+
+.group-inputs {
+    padding-top: 30px;
+}
+
+.col-md-6 {
+    padding-bottom: 15px;
+}
+
+.pane-title {
+    overflow: hidden;
+    white-space: nowrap; /* Don't forget this one */
+    text-overflow: ellipsis;
+}
+
+h3 {
+    font-size:130%;
+}
