@@ -1,8 +1,6 @@
-# BLADE project - BLockchain Automated DEcision process
+# BLADE project - manual installation of requirements to run the decision project
 
-The BLADE project, for BLockchain Automated DEcision process, aims to help companies choose between available blockchains. From a set of requirements given as an input, this automated process will compute the most desirable blockchain alternative for your project. 
-
-*This project is currently on its premises, as only a few alternatives and attributes are available, and only the CLI version is available (Web version is in development).*
+The Dockerfile at the root of this project automatically creates a platform to make decisions. But if you want to use by yourself the script and experiment on the project, follow the instructions below:
 
 ## Installation
 
@@ -70,10 +68,3 @@ To run the script from that, simply type:
 ```bash
 python3 manual_solver.py supplychain.yaml
 ```
-## Associated publications
-
-Six, Nicolas, Nicolas Herbaut, and Camille Salinesi. "Quelle Blockchain choisir? Un outil d'aide à la décision pour guider le choix de technologie Blockchain." (2020).
-
-## Contact
-
-If you have any questions, feel free to reach us at this address: nicolas.six@univ-paris1.fr!
