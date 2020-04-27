@@ -3,8 +3,13 @@
 {% block content %}
   {{ super() }}
   <div class="container">
-    <h1>The BLADE project - home</h1>
-    <h2>Coming soon!</h2><br/>
+    <div class="row">
+      <div class="col-md-12" style="text-align: center;">
+        <h1>The BLADE project - home</h1>
+        <h2>Welcome in the BLADE project platform. Click on the button below to start.</h2><br/>
+        <button class="btn btn-primary" onclick="location.href = '/recommendation';">Get recommendation</button>
+      </div>
+     </div>
   </div>
 {% endblock %}
 

@@ -8,11 +8,9 @@
   <head>
     {% block head %}
         {{ super() }}
-        <head>
-            <title>The BLADE project</title>
-            <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" />
-            <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
-        </head>
+        <title>{% block title %} The BLADE project {% endblock %}</title>
+        <link rel="icon" href="{{ url_for('static', filename='vendor/favicon.png') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
     {% endblock %}
   </head>
   <body>
