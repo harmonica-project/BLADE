@@ -13,4 +13,4 @@ if __name__ == '__main__':
 
     with open(args.user_inputs, "r") as f:
         d = yaml.load(f,Loader=yaml.FullLoader)
-        solve_from_dict(d)
+        print(solve_from_dict(d))

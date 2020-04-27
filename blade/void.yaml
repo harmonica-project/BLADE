@@ -1,47 +1,42 @@
 public:
   weight: 0
-  requirements: 0
+  requirements: []
 permissionned:
   weight: 0
-  requirements: 0
+  requirements: []
 nativeDataEncryption:
   weight: 0
-  requirements: 0
+  requirements: []
 throughtput:
   weight: 0
-  requirements: 0
+  requirements: []
 latency:
   weight: 0
-  requirements: 0
+  requirements: []
 energySaving:
   weight: 0
-  requirements: 0
+  requirements: []
 byzantineProof:
   weight: 0
-  requirements: 0
+  requirements: []
 smartContract:
   weight: 0
-  requirements: 0
+  requirements: []
 cryptocurrency:
   weight: 0
-  requirements: 0
+  requirements: []
 storageElt:
   weight: 0
-  requirements: 0
+  requirements: []
 computationalElt:
-    weight: 0
-    requirements: 0
+  weight: 0
+  requirements: []
 assetMgElt:
   weight: 0
-  requirements:
+  requirements: []
 softwareConnectorElt:
   weight: 0
-  requirements: 0
+  requirements: []
 learningCurve:
   weight: 0
-  requirements: 0
-
-
-
-
-
+  requirements: []

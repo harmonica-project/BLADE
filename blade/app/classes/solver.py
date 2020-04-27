@@ -2,7 +2,7 @@
 
 from . import bdd
 import numpy as np
-from topsis import topsis
+from app.classes.topsis import topsis
 from app.classes.bdd import Bdd
 
 
@@ -118,11 +118,15 @@ class Solver:
             else:
                 self.results["disqualified"].append(b)
 
-    def print_light_results(self, scores):
+    def return_topsis_res(self, scores=[]):
         """Display results in CLI"""
         res = ""
         if self.results["optimum_id"] is None:
-            return "No result yet. Execute the solver before."
+            res += "Alternatives cannot be ranked if weights are null.\n"
+            res += "However, blockchains have been filtered according to your requirements.\n"
+            res += "Suitable alternatives: \n"
+            for a in self.results["considered"]:
+                res += "- %s" % (a["name"] + " (" + a["infoAttributes"]["consensusAlgorithm"] + ")\n")
         else:
             res += "Considered alternatives: \n"
             for a in self.results["considered"]:
@@ -136,7 +140,8 @@ class Solver:
             res += "Best solution: %s" % (
                         best_altr["name"] + " (" + best_altr["infoAttributes"]["consensusAlgorithm"] + ")\n")
             res += "Scores: %s \n" % scores
-            return res
+        
+        return res
 
     def solve(self):
         """Executes the 2-step solving process : filter unsuitable alternatives, then run TOPSIS to find the best alternative"""
@@ -144,9 +149,12 @@ class Solver:
         self.filter_unsuitable_alternatives()
         self.gen_alternatives_values_array()
 
-        decision = topsis(self.alternatives_values, self.weights, self.costs)
-        decision.calc()
+        if(sum(abs(x) for x in self.weights) > 0):
+            decision = topsis(self.alternatives_values, self.weights, self.costs)
+            decision.calc()
 
-        self.results['optimum_id'] = decision.optimum_choice
+            self.results['optimum_id'] = decision.optimum_choice
+        
+            return self.return_topsis_res(decision.C)
 
-        return self.print_light_results(decision.C)
+        return self.return_topsis_res()
