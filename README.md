@@ -1,11 +1,11 @@
 # BLADE project - BLockchain Automated DEcision process
 
 <div align="center">
-  <img style="width: 50%; height: 50%;"src="blade/app/static/vendor/blade-project.png" />
+  <img style="max-width: 50%; max-height: 50%;"src="blade/app/static/vendor/blade-project.png" />
   <p>
-    The BLADE project, for BLockchain Automated DEcision process, aims to help companies choose between available blockchains.
+    The BLADE project aims to help companies choose between available blockchains.
     <br/>
-    From a set of requirements given as an input, this automated process will compute the most desirable blockchain alternative for your project.
+    From a set of requirements, this automated process will compute the most desirable blockchain alternative for your project.
   </p>
   <br/>
 </div> 
