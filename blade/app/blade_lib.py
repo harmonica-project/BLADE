@@ -1,6 +1,7 @@
 import yaml
 
 from app.classes.solver import Solver
+from app.classes.bdd import Bdd
 
 attributes = ["public",
               "permissionned",
@@ -27,7 +28,7 @@ def get_request_from_dict(a_dict):
         if a + "RequiredCheck" in a_dict:
             sub_attr["requirements"] = {}
             sub_attr["requirements"]["key"] = "mandatory"
-            sub_attr["requirements"]["value"] = float(a_dict[a + "RadioOptions"])
+            sub_attr["requirements"]["value"] = float(a_dict[a])
         else:
             sub_attr["requirements"] = []
         res[a] = sub_attr
@@ -41,3 +42,10 @@ def solve_from_dict(d):
     s = Solver(weights, requirements)
     p=s.solve()
     return p
+
+def get_alternatives():
+        bdd = Bdd()
+        alternatives = bdd.get_alternatives()
+        bdd.disconnect()
+        del bdd
+        return alternatives

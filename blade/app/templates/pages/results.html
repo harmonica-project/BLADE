@@ -1,49 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "layout.html" %}
 
-<head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Bare - Start Bootstrap Template</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="static/css/style.css" rel="stylesheet">
-</head>
-
-<body>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Bare - Start Bootstrap Template</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="static/css/style.css" rel="stylesheet">
-</head>
-
-<body>
-<label for="story">Your personalized recommendation</label><br>
-<textarea id="story" name="recommendation"
-          rows="20" cols="120">
-{{  solution }}
-</textarea>
-<br>
-<label for="story">Your Request as yaml</label><br>
-<textarea id="story" name="recommendation"
-          rows="20" cols="120">
-{{  request }}
-</textarea>
-</body>
-</html>
+{% block content %}
+    {{ super() }}
+    <div class="container">
+        <label for="story">Your personalized recommendation</label><br>
+        <textarea id="story" name="recommendation"
+                rows="20" cols="120">
+        {{ solution }}
+        </textarea>
+        <br>
+        <label for="story">Your Request as yaml</label><br>
+        <textarea id="story" name="recommendation"
+                rows="20" cols="120">
+        {{ request }}
+        </textarea>
+    </div>
+{% endblock %}

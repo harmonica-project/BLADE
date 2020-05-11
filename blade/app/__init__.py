@@ -5,7 +5,7 @@ from flask_appconfig import AppConfig
 from app.classes.models import forms
 from flask_nav import Nav
 from flask_nav.elements import Navbar, View
-from app.blade_lib import get_request_from_dict, solve_from_dict
+from app.blade_lib import get_request_from_dict, solve_from_dict, get_alternatives
 import yaml
 
 def create_app(configfile=None):
@@ -26,7 +26,8 @@ def create_app(configfile=None):
         return Navbar(
             'The BLADE project',
             View('Home', 'index'),
-            View('Get recommendation', 'get_recommandation')
+            View('Get recommendation', 'get_recommandation'),
+            View('Display knowledge base', 'display_knowledge_base')
         )
 
     nav.init_app(app)
@@ -52,6 +53,11 @@ def create_app(configfile=None):
     @app.route('/recommendation')
     def get_recommandation():
         return render_template('pages/get_recommendation.html')
+
+    @app.route('/knowledge_base')
+    def display_knowledge_base():
+        alternatives = get_alternatives()
+        return render_template('pages/display_knowledge_base.html', alternatives=alternatives)
 
     return app
 

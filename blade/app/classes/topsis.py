@@ -124,8 +124,12 @@ class topsis:
         # Ignore division by zero errors
         #np.seterr(all='ignore')
         # Find relative closeness
-        self.C = self.dw / (self.dw + self.db)
-        self.optimum_choice = self.C.argsort()[-1]
+        
+        if not np.count_nonzero((self.dw + self.db)):
+            pass
+        else:
+            self.C = self.dw / (self.dw + self.db)
+            self.optimum_choice = self.C.argsort()[-1]
         return
    
     

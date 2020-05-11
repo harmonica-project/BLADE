@@ -6,7 +6,6 @@
 .input-pane {
     border:1px solid black;
     border-radius:5px;
-    padding: 10px;
 }
 
 .group-inputs {
@@ -21,6 +20,13 @@
     overflow: hidden;
     white-space: nowrap; /* Don't forget this one */
     text-overflow: ellipsis;
+}
+
+.upper-separation {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-top: 15px;
+    border-top: 1px solid lightgrey;
 }
 
 h3 {
