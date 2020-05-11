@@ -1,6 +1,14 @@
 # BLADE project - BLockchain Automated DEcision process
 
-The BLADE project, for BLockchain Automated DEcision process, aims to help companies choose between available blockchains. From a set of requirements given as an input, this automated process will compute the most desirable blockchain alternative for your project. 
+<div align="center">
+  <img style="width: 50%; height: 50%;"src="blade/app/static/vendor/blade-project.png" />
+  <p>
+    The BLADE project, for BLockchain Automated DEcision process, aims to help companies choose between available blockchains.
+    <br/>
+    From a set of requirements given as an input, this automated process will compute the most desirable blockchain alternative for your project.
+  </p>
+  <br/>
+</div> 
 
 *This project is currently on its premises, as only a few alternatives and attributes are available.*
 
@@ -28,7 +36,7 @@ make stop
 
 ## Associated publications
 
-Six, Nicolas, Nicolas Herbaut, and Camille Salinesi. "Quelle Blockchain choisir? Un outil d'aide à la décision pour guider le choix de technologie Blockchain." (2020).
+Six, Nicolas, Nicolas Herbaut, and Camille Salinesi. "Quelle Blockchain choisir? Un outil d'aide à la décision pour guider le choix de technologie Blockchain." (2020). _(BLADE version tag: 1.0.0)_
 
 ## Contact
 
