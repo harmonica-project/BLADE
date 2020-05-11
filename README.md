@@ -10,7 +10,7 @@
   <br/>
 </div> 
 
-*This project is currently on its premises, as only a few alternatives and attributes are available.*
+*Disclaimer: This project is currently on its premises, as only a few alternatives and attributes are available.*
 
 ## Setup
 
