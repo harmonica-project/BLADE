@@ -9,17 +9,6 @@ def create_app(configfile=None):
 
     app.config['SECRET_KEY'] = 'devkey'
 
-    @app.route("/results", methods=["POST"])
-    def post_recommendation():
-        result = request.form
-        res = get_request_from_dict(result)
-        try:
-            s = solve_from_dict(res)
-        except:
-            s="failed to compute valid solution"
-        r=yaml.dump(res)
-        return render_template('pages/results.html', solution=s,request=r)
-
     @app.route('/')
     def index():
         return render_template('pages/index.html')
@@ -28,10 +17,20 @@ def create_app(configfile=None):
     def display_publications():
         return render_template('pages/publications.html')
 
+    # RECOMMENDATIONS
     @app.route('/recommendation/get')
     def get_recommandation():
         return render_template('pages/get_recommendation.html')
 
+    @app.route("/recommendation/results", methods=["POST"])
+    def post_recommendation():
+        result = request.form
+        res = get_request_from_dict(result)
+        s = solve_from_dict(res)
+        r=yaml.dump(res)
+        return render_template('pages/results.html', solution=s["msg"],request=r)
+
+    # KNOWLEDGE BASE
     @app.route('/knowledge_base/')
     def display_knowledge_base():
         alternatives = get_alternatives()

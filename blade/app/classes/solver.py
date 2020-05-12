@@ -122,7 +122,7 @@ class Solver:
         """Display results in CLI"""
         res = ""
         if self.results["optimum_id"] is None:
-            res += "Alternatives cannot be ranked if weights are null.\n"
+            res += "Alternatives cannot be ranked if weights are null or considered alternatives identical on chosen requirements.\n"
             res += "However, blockchains have been filtered according to your requirements.\n"
             res += "Suitable alternatives: \n"
             for a in self.results["considered"]:
@@ -141,20 +141,41 @@ class Solver:
                         best_altr["name"] + " (" + best_altr["infoAttributes"]["consensusAlgorithm"] + ")\n")
             res += "Scores: %s \n" % scores
         
-        return res
+        return {
+                "success": True,
+                "msg": res
+        }
 
     def solve(self):
         """Executes the 2-step solving process : filter unsuitable alternatives, then run TOPSIS to find the best alternative"""
 
         self.filter_unsuitable_alternatives()
-        self.gen_alternatives_values_array()
 
-        if(sum(abs(x) for x in self.weights) > 0):
-            decision = topsis(self.alternatives_values, self.weights, self.costs)
-            decision.calc()
+        if len(self.results["considered"]) == 1:
+            return {
+                "success": True,
+                "msg": "Only one alternative is compatible with your input: " + self.results["considered"][0]
+            }
+        elif len(self.results["considered"]) > 1:
+            try:
+                self.gen_alternatives_values_array()
+            
+                if(sum(abs(x) for x in self.weights) > 0):
+                    decision = topsis(self.alternatives_values, self.weights, self.costs)
+                    decision.calc()
 
-            self.results['optimum_id'] = decision.optimum_choice
-        
-            return self.return_topsis_res(decision.C)
+                    self.results['optimum_id'] = decision.optimum_choice
+                
+                    return self.return_topsis_res(decision.C)
 
-        return self.return_topsis_res()
+                return self.return_topsis_res()
+            except:
+                return {
+                    "error": True,
+                    "msg": "An unexpected error happened. Please copy your generated YAML file and send it to one of the researcher in charge of the project. Thanks!"
+                }
+        else:
+            return {
+                "success": True,
+                "msg": "No alternative compatible with this input. Please change your requirements and retry."
+            }

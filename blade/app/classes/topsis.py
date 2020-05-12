@@ -16,6 +16,7 @@ class topsis:
     optimum_choice = None
 
     def __init__(self, a, w, I):
+        print(a, w, I)
         """ Initialise topsis object with alternatives (a), weighting (w),
         and benefit/cost indicator (i). Validate the user input for correct
         dimensions etc.

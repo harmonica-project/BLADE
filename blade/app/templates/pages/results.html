@@ -4,15 +4,10 @@
     {{ super() }}
     <div class="container">
         <label for="story">Your personalized recommendation</label><br>
-        <textarea id="story" name="recommendation"
-                rows="20" cols="120">
-        {{ solution }}
-        </textarea>
+        <textarea id="story" name="recommendation" rows="20" cols="120">{{ solution }}</textarea>
         <br>
         <label for="story">Your Request as yaml</label><br>
-        <textarea id="story" name="recommendation"
-                rows="20" cols="120">
-        {{ request }}
+        <textarea id="story" name="recommendation"rows="20" cols="120">{{ request }}
         </textarea>
     </div>
 {% endblock %}
