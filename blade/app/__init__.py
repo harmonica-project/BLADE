@@ -24,6 +24,10 @@ def create_app(configfile=None):
     def index():
         return render_template('pages/index.html')
 
+    @app.route('/publications')
+    def display_publications():
+        return render_template('pages/publications.html')
+
     @app.route('/recommendation/get')
     def get_recommandation():
         return render_template('pages/get_recommendation.html')
