@@ -1,39 +1,13 @@
 import re
 from flask import Flask, render_template, flash, request, redirect, url_for
-from flask_bootstrap import Bootstrap
-from flask_appconfig import AppConfig
 from app.classes.models import forms
-from flask_nav import Nav
-from flask_nav.elements import Navbar, View
 from app.blade_lib import get_request_from_dict, solve_from_dict, get_alternatives
 import yaml
 
 def create_app(configfile=None):
     app = Flask(__name__)
 
-
-    AppConfig(app, configfile)  # Flask-Appconfig is not necessary, but
-    # highly recommend =)
-    # https://github.com/mbr/flask-appconfig
-    Bootstrap(app)
-
-    # in a real app, these should be configured through Flask-Appconfig
-
-    nav = Nav()
-
-    @nav.navigation()
-    def mynavbar():
-        return Navbar(
-            'The BLADE project',
-            View('Home', 'index'),
-            View('Get recommendation', 'get_recommandation'),
-            View('Display knowledge base', 'display_knowledge_base')
-        )
-
-    nav.init_app(app)
-
     app.config['SECRET_KEY'] = 'devkey'
-
 
     @app.route("/results", methods=["POST"])
     def post_recommendation():
@@ -50,14 +24,14 @@ def create_app(configfile=None):
     def index():
         return render_template('pages/index.html')
 
-    @app.route('/recommendation')
+    @app.route('/recommendation/get')
     def get_recommandation():
         return render_template('pages/get_recommendation.html')
 
-    @app.route('/knowledge_base')
+    @app.route('/knowledge_base/')
     def display_knowledge_base():
         alternatives = get_alternatives()
-        return render_template('pages/display_knowledge_base.html', alternatives=alternatives)
+        return render_template('pages/knowledge_base.html', alternatives=alternatives)
 
     return app
 

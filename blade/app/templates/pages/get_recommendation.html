@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "layout/layout.html" %}
 
 {% block content %}
   {{ super() }}
@@ -9,7 +9,7 @@
     <!-- ISO 25010 attributes, regroup inputs -->
     <form method="post" action="results" enctype="multipart/form-data">
         <div class="row group-inputs">
-            <div class="col-md-12">
+            <div class="col-md-12 group-inputs-title">
                 <h2>Security</h2>
             </div>
             <div class="col-md-6">
@@ -137,10 +137,11 @@
                         <h3>Throughput</h3>
                     </div>
                     <div class="col-md-12">
-                        <div class="input-group">
-                            <input type="text" id="throughput" name="throughput" class="form-control"
-                                   placeholder="Enter a number ...">
-                            <span class="input-group-addon">tx/s</span>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" id="throughput" name="throughput" placeholder="Type your desired throughput ...">
+                            <div class="input-group-append">
+                              <span class="input-group-text" id="throughput-unit">tx/s</span>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-12 upper-separation">
@@ -170,10 +171,11 @@
                         <h3>Latency</h3>
                     </div>
                     <div class="col-md-12">
-                        <div class="input-group">
-                            <input type="text" id="latency" name="latency" class="form-control"
-                                   placeholder="Enter a number ...">
-                            <span class="input-group-addon">s</span>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" id="latency" name="latency" placeholder="Type your desired latency ...">
+                            <div class="input-group-append">
+                              <span class="input-group-text" id="latency-unit">s</span>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-12 upper-separation">
@@ -246,10 +248,11 @@
                         <h3>Byzantine-fault tolerance</h3>
                     </div>
                     <div class="col-md-12">
-                        <div class="input-group">
-                            <input type="text" id="byzantineProof" class="form-control" name="byzantineProof"
-                                   placeholder="Enter a percentage ...">
-                            <span class="input-group-addon">%</span>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" id="byzantineProof" name="byzantineProof" placeholder="Type your desired percentage ...">
+                            <div class="input-group-append">
+                              <span class="input-group-text" id="byzantineProof-unit">%</span>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-12 upper-separation">
@@ -570,7 +573,7 @@
         </div>
         <div>
 
-            <input type="submit" class="btn btn-primary" value="Get Your Recommandation!"></input>
+            <input type="submit" class="btn btn-dark" value="Get Your Recommandation!"></input>
 
         </div>
         <br/>

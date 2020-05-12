@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+  <head>
+    {% block head %}
+        <title>{% block title %} The BLADE project {% endblock %}</title>
+        <link rel="icon" href="{{ url_for('static', filename='vendor/favicon.png') }}" />
+        <script src="{{ url_for('static', filename='js/jquery-3.3.1.slim.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+    {% endblock %}
+  </head>
+  <body>
+    <div id="navbar">
+      {% include "layout/navbar.html" %}
+    </div>
+    <div id="content">
+      {% block content %}{% endblock %}
+    </div>
+    <div id="footer">
+      {% include "layout/footer.html" %}
+    </div>
+  </body>
+</html>
