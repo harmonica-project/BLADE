@@ -12,6 +12,10 @@
 
 *Disclaimer: This project is currently on its premises, as only a few alternatives and attributes are available.*
 
+## Direct access
+
+If you want to try the BLADE project online, a live demo is available on [this website](https://blade.nextnet.top/)!
+
 ## Setup
 
 If you want to manually use the decision process, go inside the *blade* folder. However, the following method provides an automatic way of installing the project and use it through a web interface.
