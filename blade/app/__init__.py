@@ -3,11 +3,13 @@ from flask import Flask, render_template, flash, request, redirect, url_for
 from app.classes.models import forms
 from app.blade_lib import get_request_from_dict, solve_from_dict, get_alternatives
 import yaml
+import logging
 
 def create_app(configfile=None):
     app = Flask(__name__)
 
     app.config['SECRET_KEY'] = 'devkey'
+    logging.basicConfig(level=logging.DEBUG)
 
     @app.route('/')
     def index():
@@ -28,7 +30,7 @@ def create_app(configfile=None):
         res = get_request_from_dict(result)
         s = solve_from_dict(res)
         r=yaml.dump(res)
-        return render_template('pages/results.html', solution=s["msg"],request=r)
+        return render_template('pages/results.html', solution=s["msg"],request=res)
 
     # KNOWLEDGE BASE
     @app.route('/knowledge_base/')

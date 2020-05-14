@@ -17,7 +17,6 @@ class Bdd:
         db = client[settings.get_database()]
         return db, client
 
-
     def disconnect(self):
         self.client.close()
 
@@ -29,9 +28,9 @@ class Bdd:
         abst_labels_values = list(self.db.abstract_labels_values.find())
         return abst_labels_values
 
-    def get_attr_names(self):
-        attr_names = self.db.attr_names.find_one()
-        return list(attr_names["content"])
+    def get_attributes_metadata(self):
+        attr_meta = self.db.attributes_metadata.find_one()
+        return list(attr_meta["content"])
 
     def save_results(self, alternatives, requirements, weights, costs, results):
         self.db.historical_results.insert_one({

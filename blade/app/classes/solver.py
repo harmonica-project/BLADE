@@ -36,10 +36,11 @@ class Solver:
         self.abst_attrs_values = []
 
         self.abst_attrs_values = self.bdd.get_abst_labels_values()
-        self.alternatives_attrs, self.costs = self.get_labels_and_costs()
+        self.alternatives_attrs, self.costs, self.types = self.get_attributes_metadata()
         self.alternatives = self.bdd.get_alternatives()
         self.weights = weights
         self.requirements = requirements
+        self.update_costs_with_reqs()
 
         self.results = {
             'disqualified': [],
@@ -50,26 +51,34 @@ class Solver:
         if save:
             self.save_results()
 
+    def update_costs_with_reqs(self):
+        """Update default costs using values selected by the user"""
+        for i in range(len(self.types)):
+            if self.types[i] == "boolean":
+                self.costs[i] = int(self.requirements[i][1])
+
     def save_results(self):
         """Save results in database"""
 
         self.bdd.save_results(self.alternatives, self.requirements, self.weights, self.costs, self.results)
 
-    def get_labels_and_costs(self):
-        """Get attr labels list and costs in BDD and returns them as a tuple of arrays
+    def get_attributes_metadata(self):
+        """Get attr labels list costs, and related types in BDD and returns them as a tuple of arrays
         
         Returns:
-            [(str[], int[])] -- [Tuple of arrays containing labels and costs]
+            [(str[], int[])] -- [Tuple of arrays containing labels costs and datatypes]
         """
         labels = []
         costs = []
+        types = []
 
-        attr_names = self.bdd.get_attr_names()
-        for a in attr_names:
+        attr_meta = self.bdd.get_attributes_metadata()
+        for a in attr_meta:
             labels.append(a["name"])
-            costs.append(a["cost"])
+            costs.append(a["defaultCost"])
+            types.append(a["type"])
 
-        return labels, costs
+        return labels, costs, types
 
     def format_value(self, value):
         """Converts litteral value of alternatives attributes to numerical using correspondance array
@@ -104,7 +113,8 @@ class Solver:
             for i in range(0, len(self.requirements)):
                 if self.requirements[i][0]:
                     prop = b["consideredAttributes"][self.alternatives_attrs[i]]
-                    if prop["cost"]:
+                    print("prop", prop)
+                    if self.costs[i]:
                         if self.format_value(prop["value"]) < self.requirements[i][1]:
                             qualified = False
                             break
