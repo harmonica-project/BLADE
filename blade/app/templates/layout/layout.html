@@ -11,6 +11,16 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
     {% endblock %}
   </head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-169201303-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-169201303-1');
+</script>
+
   <body>
     <div id="navbar">
       {% include "layout/navbar.html" %}
