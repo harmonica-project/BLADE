@@ -1,0 +1,113 @@
+{% macro boolean_requirement(title, propertyId) -%}
+    <div class="col-md-6">
+        <div class="col-md-12 input-pane">
+            <div class="col-md-12 pane-title">
+                <h3>{{ title }}</h3>
+            </div>
+            <div class="col-md-12">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="{{ propertyId }}" id="{{ propertyId }}" value="1"
+                        checked>
+                    <label class="form-check-label" for="{{ propertyId }}">Yes</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="{{ propertyId }}" id="{{ propertyId }}"
+                        value="0">
+                    <label class="form-check-label" for="{{ propertyId }}">No</label>
+                </div>
+            </div>
+            <div class="col-md-12 upper-separation">
+                <div class="col-md-4">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="{{ propertyId }}RequiredCheck"
+                            name="{{ propertyId }}RequiredCheck">
+                        <label class="form-check-label" for="{{ propertyId }}RequiredCheck">Required</label>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <select class="form-control custom-select" id="{{ propertyId }}Preference" name="{{ propertyId }}Preference">
+                        <option value="0">Indifferent</option>
+                        <option value="0.25">Weakly desirable</option>
+                        <option value="0.5">Desirable</option>
+                        <option value="0.75">Highly desirable</option>
+                        <option value="1">Extremely desirable</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+{%- endmacro %}
+
+{% macro numeric_requirement(title, propertyId, placeholder, unit) -%}
+    <div class="col-md-6">
+        <div class="col-md-12 input-pane">
+            <!-- Numeric example -->
+            <div class="col-md-12 pane-title">
+                <h3>{{ title }}</h3>
+            </div>
+            <div class="col-md-12">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="{{ propertyId }}" name="{{ propertyId }}" placeholder="{{ placeholder }} ...">
+                    <div class="input-group-append">
+                    <span class="input-group-text" id="{{ propertyId }}-unit">{{ unit}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 upper-separation">
+                <div class="col-md-4">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="{{ propertyId }}RequiredCheck"
+                            name="{{ propertyId }}RequiredCheck">
+                        <label class="form-check-label" for="{{ propertyId }}RequiredCheck">Required</label>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <select class="form-control custom-select" id="{{ propertyId }}Preference" name="{{ propertyId }}Preference">
+                        <option value="0">Indifferent</option>
+                        <option value="0.25">Weakly desirable</option>
+                        <option value="0.5">Desirable</option>
+                        <option value="0.75">Highly desirable</option>
+                        <option value="1">Extremely desirable</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+{%- endmacro %}
+
+{% macro option_requirement(title, propertyId, options) -%}
+<div class="col-md-6">
+    <div class="col-md-12 input-pane">
+        <!-- Numeric example -->
+        <div class="col-md-12 pane-title">
+            <h3>{{ title }}</h3>
+        </div>
+        <div class="col-md-12">
+            <select class="form-control custom-select" id="{{ propertyId }}" name="{{ propertyId }}">
+                {% for option in options %}
+                    <option value="{{ option['value'] }}">{{ option['name'] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <hr/>
+        <div class="col-md-12 upper-separation">
+            <div class="col-md-4">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="{{ propertyId }}RequiredCheck"
+                        name="{{ propertyId }}RequiredCheck">
+                    <label class="form-check-label" for="{{ propertyId }}RequiredCheck">Required</label>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <select class="form-control custom-select" id="{{ propertyId }}Preference" name="{{ propertyId }}Preference">
+                    <option value="0">Indifferent</option>
+                    <option value="0.25">Weakly desirable</option>
+                    <option value="0.5">Desirable</option>
+                    <option value="0.75">Highly desirable</option>
+                    <option value="1">Extremely desirable</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+{%- endmacro %}
