@@ -127,11 +127,11 @@ class RecommendationAttributeForm extends Component {
                     </Col>
                     <Col md={12}>
                         <div className="form-check form-check-inline">
-                            <input className="form-check-input" type="radio" name={ attribute.key } id={ attribute.key } value="1" checked={ this.state.requirements.value === 1 } onChange={ this.handleChangeValue.bind(this) }/>
+                            <input className="form-check-input" type="radio" name={ attribute.key } id={ attribute.key } value="1" checked={ parseInt(this.state.requirements.value) === 1 } onChange={ this.handleChangeValue.bind(this) }/>
                             <label className="form-check-label" htmlFor={ attribute.key }>Yes</label>
                         </div>
                         <div className="form-check form-check-inline">
-                            <input className="form-check-input" type="radio" name={ attribute.key } id={ attribute.key } value="0" checked={ this.state.requirements.value === 0 } onChange={ this.handleChangeValue.bind(this) }/>
+                            <input className="form-check-input" type="radio" name={ attribute.key } id={ attribute.key } value="0" checked={ parseInt(this.state.requirements.value) === 0 } onChange={ this.handleChangeValue.bind(this) }/>
                             <label className="form-check-label" htmlFor={ attribute.key }>No</label>
                         </div>
                     </Col>
