@@ -14,7 +14,7 @@ class RecommendationCategoryForm extends Component {
         return (
             <Accordion defaultActiveKey="0" className="category">
                 <Card>
-                    <Accordion.Toggle as={Card.Header} eventKey="0">
+                    <Accordion.Toggle as={Card.Header} eventKey="0" className="accordionHeader">
                         <h2>{ this.props.categoryInfo.name }</h2>
                     </Accordion.Toggle>
                     <Accordion.Collapse eventKey="0">

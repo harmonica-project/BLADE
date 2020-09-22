@@ -128,7 +128,7 @@ class Solver:
             else:
                 self.results["disqualified"].append(b)
 
-    def return_topsis_res(self, scores=[]):
+    def return_topsis_res_text(self, scores=[]):
         """Display results in CLI"""
         res = ""
         if self.results["optimum_id"] is None:
@@ -151,12 +151,46 @@ class Solver:
                         best_altr["name"] + " (" + best_altr["infoAttributes"]["consensusAlgorithm"] + ")\n")
             res += "Scores: %s \n" % scores
         
+        return res
+
+
+    def return_topsis_res(self, scores=[]):
+        """Display results in CLI"""
+        res = []
+        if self.results["optimum_id"] is None:
+            for a in self.results["considered"]:
+                res.append({
+                    "name": a["name"],
+                    "consensusAlgorithm": a["infoAttributes"]["consensusAlgorithm"],
+                    "score": 1
+                })
+            for a in self.results["disqualified"]:
+                res.append({
+                    "name": a["name"],
+                    "consensusAlgorithm": a["infoAttributes"]["consensusAlgorithm"],
+                    "score": -1
+                })
+        else:
+            for a in self.results["disqualified"]:
+                res.append({
+                    "name": a["name"],
+                    "consensusAlgorithm": a["infoAttributes"]["consensusAlgorithm"],
+                    "score": -1
+                })
+
+            for i in range(len(scores)):
+                res.append({
+                    "name": self.results["considered"][i]["name"],
+                    "consensusAlgorithm": self.results["considered"][i]["infoAttributes"]["consensusAlgorithm"],
+                    "score": scores[i]
+                })
+        
         return {
                 "success": True,
-                "msg": res
+                "res": res
         }
 
-    def solve(self):
+    def solve(self, text_res=False):
         """Executes the 2-step solving process : filter unsuitable alternatives, then run TOPSIS to find the best alternative"""
 
         self.filter_unsuitable_alternatives()
@@ -171,21 +205,23 @@ class Solver:
 
                     self.results['optimum_id'] = decision.optimum_choice
                 
-                    return self.return_topsis_res(decision.C)
+                    if(text_res == True):
+                        return self.return_topsis_res_text(decision.C)
+                    else: 
+                        return self.return_topsis_res(decision.C)
 
-                return self.return_topsis_res()
-            except TypeError as err:
+                if(text_res == True):
+                    return self.return_topsis_res_text()
+                else: 
+                    return self.return_topsis_res()
+            except Exception as err:
                 return {
                     "error": True,
                     "msg": err
                 }
-            except:
-                return {
-                    "error": True,
-                    "msg": "An unexpected error happened. Please copy your generated YAML file and send it to one of the researcher in charge of the project. Thanks!"
-                }
+
         else:
             return {
                 "success": True,
-                "msg": "No alternative compatible with this input. Please change your requirements and retry."
+                "res": [-1]*len(self.alternatives)
             }

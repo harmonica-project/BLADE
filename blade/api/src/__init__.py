@@ -2,7 +2,7 @@ import re
 from flask import Flask, flash, request, redirect, url_for
 from flask_cors import CORS
 from src.classes.models import forms
-from src.blade_lib import get_request_from_dict, solve_from_dict, get_alternatives
+from src.blade_lib import get_request_from_dict, solve_from_dict_api, get_alternatives
 import yaml
 import logging
 import json
@@ -21,7 +21,7 @@ def create_app(configfile=None):
     @app.route("/api/recommendation/generate", methods=["POST"])
     def generate_recommendation():
         json_request = request.get_json()
-        s = solve_from_dict(json_request)
+        s = solve_from_dict_api(json_request)
         payload = {
             "result": s,
             "request": json_request

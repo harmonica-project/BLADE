@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { stringify } from 'json2yaml';
 import RecommendationCategoryForm from '../../parts/RecommendationCategoryForm/RecommendationCategoryForm';
+import RecommendationLogs from '../../parts/RecommendationLogs/RecommendationLogs';
 import { apiUrl } from '../../../static/js/variables';
 import { struct } from './struct';
 import './Recommendation.css';
@@ -39,7 +40,9 @@ class Recommendation extends Component {
         })
 
         this.state = {
-          form: attributeForm
+          form: attributeForm,
+          yamlFile: "",
+          results: {}
         };
     }
 
@@ -58,8 +61,10 @@ class Recommendation extends Component {
             })
             .then(response => response.json())
             .then(response => {
-                this.resultsField.current.value = JSON.stringify(response.result, null, "\t").replace(/\\n/g, ' / ');
-                this.yamlField.current.value = stringify(response.request);
+                this.setState({
+                    results: response.result,
+                    yamlFile: stringify(response.request)
+                });
             });
         });
     }
@@ -83,10 +88,7 @@ class Recommendation extends Component {
                         </Col>
                         <Col>
                             <h1 className="section-title">Results</h1>
-                            <h2>Decision results</h2>
-                            <textarea className="form-control" id="resultsField" ref={ this.resultsField }rows="10"></textarea>
-                            <h2>YAML file</h2>
-                            <textarea className="form-control" id="yamlField" ref={ this.yamlField }rows="10"></textarea>
+                            <RecommendationLogs resultsField={ JSON.stringify(this.state.results, null, "\t").replace(/\\n/g, ' / ') } yamlField={ this.state.yamlFile }/>
                         </Col>
                     </Row>
                 </Container>

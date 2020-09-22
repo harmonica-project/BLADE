@@ -4,7 +4,7 @@
 
 import yaml
 import argparse
-from api.blade_lib import solve_from_dict
+from api.blade_lib import solve_from_dict_cli
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Decision process blockchain')
     parser.add_argument('user_inputs', metavar='FILE', type=str)
@@ -13,4 +13,4 @@ if __name__ == '__main__':
 
     with open(args.user_inputs, "r") as f:
         d = yaml.load(f,Loader=yaml.FullLoader)
-        print(solve_from_dict(d))
+        print(solve_from_dict_cli(d))

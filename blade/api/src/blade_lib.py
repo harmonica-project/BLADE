@@ -40,16 +40,22 @@ def get_request_from_dict(a_dict):
         res[a] = sub_attr
     return res
 
-
-def solve_from_dict(d):
+def parse_requirements(d):
     weights = [float(v["weight"]) for k, v in d.items()]
     requirements = [(0,) if len(v["requirements"]) == 0 else (
         1 if v["requirements"]["key"] == "mandatory" else 0, float(v["requirements"]["value"])) for k, v in d.items()]
-    s = Solver(weights, requirements)
-    pprint(weights)
-    pprint(requirements)
-    p=s.solve()
+    return weights, requirements
+
+def solve_from_dict_cli(d):
+    weights, requirements = parse_requirements(d)
+    p = Solver(weights, requirements).solve(True)
     return p
+
+def solve_from_dict_api(d):
+    weights, requirements = parse_requirements(d)
+    p = Solver(weights, requirements).solve()
+    return p
+
 
 def get_alternatives():
         bdd = Bdd()
