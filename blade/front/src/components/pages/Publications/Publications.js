@@ -14,7 +14,7 @@ class Publications extends PureComponent {
         return (
             <div className="publications">
                 <Container>
-                    <h1 className="section-title">Associated publications</h1>
+                    <h1 className="section-title display-4">Associated publications</h1>
                     <div className="list-group group-inputs">
                         <a href="http://ceur-ws.org/Vol-2613/" className="list-group-item list-group-item-action">
                             Six, Nicolas. 

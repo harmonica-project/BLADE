@@ -10,12 +10,26 @@ import './RecommendationLogs.css';
  * @author [Nicolas Six](https://github.com/nicoSix)
  */
 class RecommendationLogs extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            open: false
+        }
+    }
+
+    accordionHandler() {
+        this.setState({
+            open: !this.state.open
+        })
+    }
+
     render() {
         return (
             <Accordion className="category">
                 <Card>
-                    <Accordion.Toggle as={Card.Header} eventKey="0" className="accordionHeader">
-                        <h2>Recommendation logs</h2>
+                    <Accordion.Toggle as={Card.Header} eventKey="0" className="accordionHeader" onClick={ this.accordionHandler.bind(this) }>
+                        <h2 className="accordionTitle">Raw response</h2>
+                        <small className="text-muted">(Click to { this.state.open ? "hide" : "display"})</small>
                     </Accordion.Toggle>
                     <Accordion.Collapse eventKey="0">
                     <Card.Body>

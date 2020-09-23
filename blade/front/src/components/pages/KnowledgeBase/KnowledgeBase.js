@@ -63,7 +63,7 @@ class KnowledgeBase extends Component {
                         
                         this.state.kb.map((row, index) => {
                             console.log(row["consideredAttributes"][key])
-                            return <td key={ index }>{ row["consideredAttributes"][key].toString() }</td>
+                            return <td key={ index }>{ JSON.stringify(row["consideredAttributes"][key], null, "\t") }</td>
                         })
                     }
                 </tr>
@@ -76,7 +76,7 @@ class KnowledgeBase extends Component {
         return (
             <div className="knowledge-base">
                 <Container>
-                    <h1 className="section-title">Blockchain alternatives</h1>
+                    <h1 className="section-title display-4">Blockchain alternatives</h1>
                     <Table striped bordered hover>
                         <thead>
                             <tr>

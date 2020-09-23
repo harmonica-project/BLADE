@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react';
 import { Accordion, Card, Row } from 'react-bootstrap';
+import { useAccordionToggle } from 'react-bootstrap/AccordionToggle';
 import RecommendationAttributeForm from '../../parts/RecommendationAttributeForm/RecommendationAttributeForm';
 import './RecommendationCategoryForm.css';
 
@@ -10,12 +11,36 @@ import './RecommendationCategoryForm.css';
  * @author [Nicolas Six](https://github.com/nicoSix)
  */
 class RecommendationCategoryForm extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            open: false
+        }
+    }
+
+    toggleAccordion(isOpen) {
+        if(isOpen !== this.state.open) {
+            this.setState({
+                open: isOpen
+            }, () => {
+                useAccordionToggle(0, null);
+            })
+        }
+    }
+
+    accordionHandler() {
+        this.setState({
+            open: !this.state.open
+        })
+    }
+
     render() {
         return (
-            <Accordion defaultActiveKey="0" className="category">
+            <Accordion className="category">
                 <Card>
-                    <Accordion.Toggle as={Card.Header} eventKey="0" className="accordionHeader">
-                        <h2>{ this.props.categoryInfo.name }</h2>
+                    <Accordion.Toggle as={Card.Header} eventKey="0" className="accordionHeader" onClick={ this.accordionHandler.bind(this) }>
+                        <h2 className="accordionTitle">{ this.props.categoryInfo.name }</h2>
+                        <small className="text-muted">(Click to { this.state.open ? "hide" : "display"})</small>
                     </Accordion.Toggle>
                     <Accordion.Collapse eventKey="0">
                     <Card.Body>

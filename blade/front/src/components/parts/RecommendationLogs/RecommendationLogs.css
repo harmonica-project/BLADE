@@ -1,3 +1,7 @@
 .accordionHeader {
-    cursor: pointer
+    cursor: pointer;
+}
+
+.accordionTitle {
+    margin-bottom: 0px;
 }
