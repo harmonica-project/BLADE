@@ -5,6 +5,7 @@ import { stringify } from 'json2yaml';
 import RecommendationCategoryForm from '../../parts/RecommendationCategoryForm/RecommendationCategoryForm';
 import RecommendationLogs from '../../parts/RecommendationLogs/RecommendationLogs';
 import ResultsTable from '../../parts/ResultsTable/ResultsTable';
+import InfoModal from '../../parts/InfoModal/InfoModal';
 import { apiUrl } from '../../../static/js/variables';
 import { struct } from './struct';
 import './Recommendation.css';
@@ -20,14 +21,15 @@ class Recommendation extends Component {
         super(props);
         var attributeKeys = [];
         var attributeForm = {};
+        var categoryRefs = {};
+        this.infoModal = React.createRef();
 
-        this.resultsField = React.createRef();
-        this.yamlField = React.createRef();
-        
         struct.forEach(category => {
             category.fields.forEach(attribute => {
                 attributeKeys.push(attribute.key);
             })
+
+            categoryRefs[category.name] = React.createRef();
         })
 
         attributeKeys.forEach(key => {
@@ -43,8 +45,21 @@ class Recommendation extends Component {
         this.state = {
           form: attributeForm,
           yamlFile: "",
-          results: {}
+          results: {},
+          categoryRefs: categoryRefs
         };
+    }
+
+    openInfoModal() {
+        this.infoModal.current.openModal()
+    }
+
+    toggleCategories(isOpen) {
+        Object.keys(this.state.categoryRefs).forEach(key => {
+            console.log(this.state.categoryRefs)
+            console.log(this.state.categoryRefs[key].current)
+            this.state.categoryRefs[key].current.toggleAccordion(isOpen);
+        })
     }
 
     updateFormValues(attrKey, newAttrValues) {
@@ -77,6 +92,7 @@ class Recommendation extends Component {
     render() {
         return (
             <div className="recommendation">
+                <InfoModal ref={ this.infoModal }/>
                 <Container fluid>
                     <Row>
                         <Col>
@@ -93,13 +109,13 @@ class Recommendation extends Component {
                                         <p className="lead">Please select your requirements below.</p>
                                     </Col>
                                     <Col className="buttonGroup">
-                                        <Button variant="secondary">Open all</Button>{' '}
-                                        <Button variant="secondary">Close all</Button>
+                                        <Button variant="secondary" onClick={ this.toggleCategories.bind(this, true) }>Open all</Button>{' '}
+                                        <Button variant="secondary" onClick={ this.toggleCategories.bind(this, false) }>Close all</Button>
                                     </Col>
                                 </Row>
                                 {
-                                    struct.map(categoryInfo => {
-                                        return <RecommendationCategoryForm key={ categoryInfo.name } categoryInfo={ categoryInfo } updateFormValues={ this.updateFormValues.bind(this) }/>
+                                    struct.map((categoryInfo) => {
+                                        return <RecommendationCategoryForm ref={ this.state.categoryRefs[categoryInfo.name] } key={ categoryInfo.name } categoryInfo={ categoryInfo } updateFormValues={ this.updateFormValues.bind(this) }/>
                                     })
                                 }
                             </div>
@@ -111,7 +127,7 @@ class Recommendation extends Component {
                                         <h2 className="inputHeader">Results panel</h2>
                                     </Col>
                                     <Col className="buttonGroup">
-                                        <Button variant="secondary">?</Button>
+                                        <Button variant="secondary" onClick={ this.openInfoModal.bind(this) }>?</Button>
                                     </Col>
                                 </Row>
                                 <ResultsTable results={ (this.state.results ? this.state.results.res : {}) }/>
