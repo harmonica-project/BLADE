@@ -28,7 +28,7 @@ class ResultsTable extends Component {
                     <tbody>
                         { this.getSortedResults(this.props.results).map((result, i) => {
                             return (
-                                <tr>
+                                <tr key={i}>
                                     <td>#{ (i + 1) }</td>
                                     <td>{ result["name"] + " (" + result["consensusAlgorithm"] + ")"}</td>
                                     <td>{ result["score"] }</td>

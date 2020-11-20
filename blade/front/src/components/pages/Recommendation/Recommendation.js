@@ -22,6 +22,8 @@ class Recommendation extends Component {
         var attributeKeys = [];
         var attributeForm = {};
         var categoryRefs = {};
+
+        this.constraints = []
         this.infoModal = React.createRef();
 
         struct.forEach(category => {
@@ -46,7 +48,11 @@ class Recommendation extends Component {
           form: attributeForm,
           yamlFile: "",
           results: {},
-          categoryRefs: categoryRefs
+          categoryRefs: categoryRefs,
+          isLoading: true,
+          constraints: {},
+          history: [],
+          requirements: {}
         };
     }
 
@@ -56,10 +62,49 @@ class Recommendation extends Component {
 
     toggleCategories(isOpen) {
         Object.keys(this.state.categoryRefs).forEach(key => {
-            console.log(this.state.categoryRefs)
-            console.log(this.state.categoryRefs[key].current)
             this.state.categoryRefs[key].current.toggleAccordion(isOpen);
         })
+    }
+
+    async getConstraints() {
+        return fetch(apiUrl + '/api/constraints/generate', {
+            method: "get",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(response => {
+            return response.result
+        });
+    }
+
+    buildNewHistory(attrKey, attrValue) {
+        var newHistory = this.state.history
+        var found = false
+
+        for (var i = 0; i < newHistory.length; i++) {
+            var key = Object.keys(newHistory[i])[0]
+            if (key === attrKey) {
+                found = true;
+                newHistory[i][key] = attrValue;
+            }
+        }
+
+        if(!found) newHistory.push({[attrKey]: attrValue});
+        return newHistory;
+    }
+
+    buildNewRequirements(attrKey, attrValue) {
+        var newRequirements = this.state.requirements;
+        if(attrValue["requirements"]["key"] === "mandatory") {
+            newRequirements[attrKey] = attrValue["requirements"]["value"];
+        }
+        else {
+            if(newRequirements[attrKey]) delete newRequirements[attrKey];
+        }
+        return newRequirements;
     }
 
     updateFormValues(attrKey, newAttrValues) {
@@ -77,16 +122,31 @@ class Recommendation extends Component {
             })
             .then(response => response.json())
             .then(response => {
+                var newHistory = this.buildNewHistory(attrKey, newAttrValues)
+                var newRequirements = this.buildNewRequirements(attrKey, newAttrValues)
+                
                 this.setState({
+                    history: newHistory,
                     results: response.result,
-                    yamlFile: stringify(response.request)
+                    yamlFile: stringify(response.request),
+                    requirements: newRequirements
                 });
+
+                //console.log(this.state.history)
+                console.log(this.state.requirements)
             });
         });
     }
 
     componentDidMount() {
-        this._isMounted = true;
+        this.getConstraints()
+            .then(constraints => {
+                console.log(constraints)
+                this.setState({
+                    isLoading: false, 
+                    constraints: constraints
+                });
+            });
     }
 
     render() {
@@ -115,7 +175,14 @@ class Recommendation extends Component {
                                 </Row>
                                 {
                                     struct.map((categoryInfo) => {
-                                        return <RecommendationCategoryForm ref={ this.state.categoryRefs[categoryInfo.name] } key={ categoryInfo.name } categoryInfo={ categoryInfo } updateFormValues={ this.updateFormValues.bind(this) }/>
+                                        return <RecommendationCategoryForm 
+                                            ref={ this.state.categoryRefs[categoryInfo.name] } 
+                                            key={ categoryInfo.name } 
+                                            categoryInfo={ categoryInfo } 
+                                            updateFormValues={ this.updateFormValues.bind(this) } 
+                                            constraints={ this.state.constraints } 
+                                            requirements={ this.state.requirements }
+                                        />
                                     })
                                 }
                             </div>

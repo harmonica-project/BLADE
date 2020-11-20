@@ -6,8 +6,8 @@ from src.classes.topsis import topsis
 from src.classes.bdd import Bdd
 
 
-class Solver:
-    """Solver object is responsible of doing calculations to find the best alternative when requirements are provided."""
+class ScoringSolver:
+    """ScoringSolver object is responsible of doing calculations to find the best alternative when requirements are provided."""
 
     def __init__(self, weights, requirements):
         """Initialize the object by creating a new solving session using user requirements and preferences
@@ -33,8 +33,6 @@ class Solver:
             requirements {[(int, int)[]]} -- [User requirements]
         """
         self.alternatives_values = []
-        self.abst_attrs_values = []
-
         self.abst_attrs_values = self.bdd.get_abst_labels_values()
         self.alternatives_attrs, self.costs, self.types = self.get_attributes_metadata()
         self.alternatives = self.bdd.get_alternatives()
@@ -113,7 +111,6 @@ class Solver:
             for i in range(0, len(self.requirements)):
                 if self.requirements[i][0]:
                     prop = b["consideredAttributes"][self.alternatives_attrs[i]]
-                    print("prop", prop)
                     if self.costs[i]:
                         if self.format_value(prop["value"]) < self.requirements[i][1]:
                             qualified = False
@@ -190,7 +187,7 @@ class Solver:
                 "res": res
         }
 
-    def solve(self, text_res=False):
+    def solve(self, save=False, text_res=False):
         """Executes the 2-step solving process : filter unsuitable alternatives, then run TOPSIS to find the best alternative"""
 
         self.filter_unsuitable_alternatives()
@@ -221,7 +218,16 @@ class Solver:
                 }
 
         else:
+            res = []
+
+            for i in range(len(self.alternatives)):
+                res.append({
+                    "name": self.alternatives[i]["name"],
+                    "consensusAlgorithm": self.alternatives[i]["infoAttributes"]["consensusAlgorithm"],
+                    "score": -1
+                })
+
             return {
                 "success": True,
-                "res": [-1]*len(self.alternatives)
+                "res": res
             }

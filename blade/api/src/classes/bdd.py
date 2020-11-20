@@ -5,6 +5,7 @@ from pymongo import errors
 from . import settings
 import pymongo as pym
 import time
+import pprint
 
 
 class Bdd:
@@ -20,8 +21,39 @@ class Bdd:
     def disconnect(self):
         self.client.close()
 
+    def parse_abs_values_to_dict(self, abs_values):
+        new_abs_values = {}
+        for value in abs_values:
+            new_abs_values[value["name"]] = value["value"]
+        
+        return new_abs_values
+    
+    def parse_attr_metadata_to_dict(self, attr_metadatas):
+        new_attr_metadatas = {}
+        for meta in attr_metadatas:
+            new_attr_metadatas[meta["name"]] = {
+                "defaultCost": meta["defaultCost"],
+                "type": meta["type"]
+            }
+        
+        return new_attr_metadatas
+
+    def merge_alternative_and_metadata(self, alternatives, label_values, metadata):
+        for i in range(len(alternatives)):
+            for attrKey in alternatives[i]["consideredAttributes"]:
+                if alternatives[i]["consideredAttributes"][attrKey]["value"] in label_values:
+                    alternatives[i]["consideredAttributes"][attrKey]["value"] = label_values[alternatives[i]["consideredAttributes"][attrKey]["value"]]
+                alternatives[i]["consideredAttributes"][attrKey]["cost"] = metadata[attrKey]["defaultCost"]
+                alternatives[i]["consideredAttributes"][attrKey]["type"] = metadata[attrKey]["type"]
+        return alternatives
+
     def get_alternatives(self):
-        alternatives = list(self.db.blockchains.find())
+        abst_labels_values = self.parse_abs_values_to_dict(self.get_abst_labels_values())
+        attr_meta = self.parse_attr_metadata_to_dict(self.get_attributes_metadata())
+
+        # The function automatically replaces label values (eg. advanced) with numbers defined in database
+        alternatives = self.merge_alternative_and_metadata(list(self.db.blockchains.find()), abst_labels_values, attr_meta)
+        pprint.pprint(alternatives)
         return alternatives
 
     def get_abst_labels_values(self):

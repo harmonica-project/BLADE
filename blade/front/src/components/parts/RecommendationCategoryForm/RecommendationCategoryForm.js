@@ -1,5 +1,6 @@
 
 import React, { Component } from 'react';
+import { Col, Row } from 'react-bootstrap';
 import RecommendationAttributeForm from '../../parts/RecommendationAttributeForm/RecommendationAttributeForm';
 import './RecommendationCategoryForm.css';
 
@@ -38,11 +39,23 @@ class RecommendationCategoryForm extends Component {
                     <small className="text-muted">(Click to { this.state.open ? "hide" : "display"})</small>
                 </div>
                 <ul className={"card-body " + (this.state.open ? "" : "collapse")}>
-                {
-                    this.props.categoryInfo.fields.map(attribute => {
-                        return <RecommendationAttributeForm key={attribute.key} attribute={ attribute } updateFormValues={ this.props.updateFormValues }/>
-                    })
-                }
+                    <Row>
+                    {
+                        this.props.categoryInfo.fields.map(attribute => {
+                            return (
+                                <Col className="attributeCol d-flex justify-content-center">
+                                    <RecommendationAttributeForm 
+                                        key={attribute.key} 
+                                        attribute={ attribute } 
+                                        updateFormValues={ this.props.updateFormValues } 
+                                        constraints={ this.props.constraints } 
+                                        requirements={ this.props.requirements }
+                                    />
+                                </Col>
+                            )
+                        })
+                    }
+                    </Row>
                 </ul>
             </div>
         )

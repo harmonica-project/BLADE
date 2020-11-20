@@ -1,6 +1,7 @@
 import yaml
 
-from src.classes.solver import Solver
+from src.classes.scoring_solver import ScoringSolver
+from src.classes.constraint_solver import ConstraintSolver
 from src.classes.bdd import Bdd
 from pprint import pprint
 
@@ -48,12 +49,12 @@ def parse_requirements(d):
 
 def solve_from_dict_cli(d):
     weights, requirements = parse_requirements(d)
-    p = Solver(weights, requirements).solve(True)
+    p = ScoringSolver(weights, requirements).solve(True, False)
     return p
 
 def solve_from_dict_api(d):
     weights, requirements = parse_requirements(d)
-    p = Solver(weights, requirements).solve()
+    p = ScoringSolver(weights, requirements).solve(False, False)
     return p
 
 
@@ -63,3 +64,9 @@ def get_alternatives():
         bdd.disconnect()
         del bdd
         return alternatives
+
+def generate_constraints_from_dict():
+    c = ConstraintSolver()
+    c.set_solutions()
+    constraints = c.compute_constraints()
+    return constraints

@@ -2,9 +2,10 @@ import re
 from flask import Flask, flash, request, redirect, url_for
 from flask_cors import CORS
 from src.classes.models import forms
-from src.blade_lib import get_request_from_dict, solve_from_dict_api, get_alternatives
+from src.blade_lib import get_request_from_dict, solve_from_dict_api, get_alternatives, generate_constraints_from_dict
 import yaml
 import logging
+import pprint
 import json
 
 def create_app(configfile=None):
@@ -17,6 +18,14 @@ def create_app(configfile=None):
     def get_knowledge_base():
         alternatives = get_alternatives()
         return json.dumps(alternatives, default=str)
+
+    @app.route('/api/constraints/generate')
+    def generate_constraints():
+        constraints = generate_constraints_from_dict()
+        payload = {
+            "result": constraints
+        }
+        return json.dumps(payload, default=str)
 
     @app.route("/api/recommendation/generate", methods=["POST"])
     def generate_recommendation():
