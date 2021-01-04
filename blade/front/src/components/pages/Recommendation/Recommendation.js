@@ -166,7 +166,7 @@ class Recommendation extends Component {
                                 <Row>
                                     <Col md={8}>
                                         <h2 className="inputHeader">Requirement selection</h2>
-                                        <p className="lead">Please select your requirements below.</p>
+                                        <p className="lead">For each field, you can select your preferences using the scale selector. You can also select your requirements using the dedicated checkbox and associated value field for each attribute.</p>
                                     </Col>
                                     <Col className="buttonGroup">
                                         <Button variant="secondary" onClick={ this.toggleCategories.bind(this, true) }>Open all</Button>{' '}

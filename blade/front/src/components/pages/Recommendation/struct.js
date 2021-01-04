@@ -21,7 +21,7 @@ exports.struct = [
         ]
     },
     {
-        name: "Performance",
+        name: "Performance efficiency",
         fields: [
             {
                 name: "Throughput",
