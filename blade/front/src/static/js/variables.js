@@ -1,1 +1,1 @@
-exports.apiUrl = "http://blade-back:5000";
+exports.apiUrl = "https://recommender-api.blade-blockchain.eu";
