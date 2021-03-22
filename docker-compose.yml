@@ -1,0 +1,59 @@
+version: '3.3'
+services:
+  traefik:
+    image: traefik:v2.4
+    command:
+            #- "--api.insecure=true"
+        #      - "--accesslog=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.myresolver.acme.email=nicolas.herbaut@gmail.com"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+        #      - "--log.level=DEBUG"
+    ports:
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - "./letsencrypt:/letsencrypt"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "/var/log/traefik/:/var/log"
+
+  
+  blade-front:
+    image: bladesorbonne/blade-img-front
+    container_name: blade-front
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.blade-front.tls.certresolver=myresolver"
+      - "traefik.http.routers.blade-front.rule=host(`recommender.blade-blockchain.eu`)"
+      - "traefik.http.routers.blade-front.entrypoints=websecure"
+      - "traefik.http.services.blade-front.loadbalancer.server.port=3000"
+    expose:
+      - "3000"
+    stdin_open: #gross haack for react webapp
+      true
+    ports:
+      - "3000:3000"
+    depends_on:
+      - blade-api
+  blade-api:
+    image: bladesorbonne/blade-img-api
+    container_name: blade-api
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.blade-api.tls.certresolver=myresolver"
+      - "traefik.http.routers.blade-api.rule=host(`recommender-api.blade-blockchain.eu`)"
+      - "traefik.http.routers.blade-api.entrypoints=websecure"
+      - "traefik.http.services.blade-api.loadbalancer.server.port=5000"
+      - "traefik.http.middlewares.testheader.headers.accessControlAllowHeaders=content-type"
+      - "traefik.http.middlewares.testheader.headers.accesscontrolallowmethods=GET,OPTIONS,PUT,POST"
+      - "traefik.http.middlewares.testheader.headers.accesscontrolalloworiginlist=*"
+      - "traefik.http.middlewares.testheader.headers.accesscontrolmaxage=100"
+      - "traefik.http.middlewares.testheader.headers.addvaryheader=true"
+      - "traefik.http.routers.blade-api.middlewares=testheader@docker"
+    expose:
+      - "5000"
+    depends_on:
+      - traefik

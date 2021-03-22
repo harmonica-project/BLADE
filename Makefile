@@ -10,7 +10,7 @@ run:
 	docker run -it --name blade-api -d -p 5000:5000 bladesorbonne/blade-img-api
 	docker run -it --name blade-front -d -p 3000:3000 bladesorbonne/blade-img-front
 
-#push:
-#	docker push bladesorbonne/blade-img
-
+push:
+	docker push bladesorbonne/blade-img-api
+	docker push bladesorbonne/blade-img-front
 
