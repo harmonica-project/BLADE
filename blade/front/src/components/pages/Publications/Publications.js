@@ -16,7 +16,7 @@ class Publications extends PureComponent {
                 <Container>
                     <h1 className="section-title display-4">Associated publications</h1>
                     <div className="list-group group-inputs">
-                        <a href="https://www.openscience.fr/BLADE-Un-outil-d-aide-a-la-decision-automatique-pour-guider-le-choix-de" className="list-group-item list-group-item-action">
+                        <a href="https://arxiv.org/pdf/2101.08997" className="list-group-item list-group-item-action">
                              Nicolas Six, Claudia Negri Ribalta, Nicolas Herbaut, Camille Salinesi
                             "A blockchain-based pattern for confidential and pseudo-anonymous contract enforcement"
                             2020 IEEE 19th International Conference on Trust, Security and Privacy in Computing and Communications (TrustCom)
