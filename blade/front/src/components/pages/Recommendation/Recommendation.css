@@ -1,0 +1,24 @@
+.recommendation {
+    text-align: left;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.section-title {
+    margin-bottom: 30px;
+}
+
+.inputHeader, .resultsWrapper {
+    margin-bottom: 10px;
+}
+
+.sectionWrapper {
+    background-color: rgba(0,0,0,.03);
+    padding: .75rem 1.25rem;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 3px;
+}
+
+.buttonGroup {
+    text-align: right;
+}
