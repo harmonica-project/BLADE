@@ -1,7 +1,7 @@
 from flask_wtf import Form
 from flask_wtf.file import FileField
 from wtforms import SelectField, SubmitField, ValidationError, IntegerField, RadioField, BooleanField, validators, FormField
-from wtforms.validators import Required
+from wtforms.validators import DataRequired
 
 class BlockchainArchType(Form):
     storage = BooleanField('Storage element')
@@ -18,13 +18,13 @@ class FeaturesForm(Form):
     blockchain_archtype = FormField(BlockchainArchType, 'Blockchain architectural type')
 
 class SecurityForm(Form):
-    scope = SelectField('Blockchain scope', choices=[('public', 'Public'), ('private', 'Private')], validators=[Required()])
-    data_access = SelectField('Data access', choices=[('unpermissionned', 'Unpermissionned'), ('permissionned', 'Permissionned')], validators=[Required()])
+    scope = SelectField('Blockchain scope', choices=[('public', 'Public'), ('private', 'Private')], validators=[DataRequired()])
+    data_access = SelectField('Data access', choices=[('unpermissionned', 'Unpermissionned'), ('permissionned', 'Permissionned')], validators=[DataRequired()])
     data_encryption = BooleanField('Native data encryption?')
 
 class EfficiencyForm(Form):
-    throughput = IntegerField('Throughput (tx/s)', validators=[Required()])
-    latency = IntegerField('Maximum latency', validators=[Required()])
+    throughput = IntegerField('Throughput (tx/s)', validators=[DataRequired()])
+    latency = IntegerField('Maximum latency', validators=[DataRequired()])
     energy_saving = BooleanField('Energy saving?')
 
 class ReliabilityForm(Form):

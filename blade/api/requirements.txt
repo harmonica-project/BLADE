@@ -1,9 +1,8 @@
-numpy==1.18.1
-flask==1.1.2
-Flask-Bootstrap==3.3.7.1
-flask_appconfig==0.11.1
-pymongo==3.10.1
-flask-nav==0.6
-Flask-WTF==0.14.3
-pyyaml==5.3.1
-Flask-Cors==3.0.9
+api==0.0.7
+Flask==2.2.2
+Flask_Cors==3.0.10
+Flask_WTF==1.0.1
+numpy==1.24.1
+pymongo==4.3.3
+PyYAML==6.0
+WTForms==3.0.1

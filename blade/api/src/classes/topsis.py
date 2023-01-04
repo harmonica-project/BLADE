@@ -26,14 +26,14 @@ class topsis:
         :param np.ndarray I: A 1D array of shape (n)
         """
         # Decision Matrix
-        self.a = np.array(a, dtype=np.float).T
+        self.a = np.array(a, dtype=float).T
         assert len(self.a.shape) == 2, "Decision matrix a must be 2D"
 
         # Number of alternatives, aspects
         (self.n, self.J) = self.a.shape
 
         # Weight matrix
-        self.w = np.array(w, dtype=np.float)
+        self.w = np.array(w, dtype=float)
         assert len(self.w.shape) == 1, "Weights array must be 1D"
         assert self.w.size == self.n, "Weights array wrong length, " + \
                                       "should be of length {}".format(self.n)
